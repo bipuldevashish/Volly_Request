@@ -1,15 +1,17 @@
 package com.example.pro_x.Model
 
-class ImageListModel {
+class ImageListModel (
 
-    var id : Int = 0
-    lateinit var mediumUrl : String
-    lateinit var largeUrl : String
+            var id: Int,
 
-    constructor(id: Int, mediumUrl: String, largeUrl: String) {
-        this.id = id
-        this.mediumUrl = mediumUrl
-        this.largeUrl = largeUrl
+            var mediumUrl: String,
+
+            var largeUrl: String,
+
+    ) {
+
+        override fun toString(): String {
+            return "ImageListModel(title='$id', image='$mediumUrl', username='$largeUrl')"
+        }
+
     }
-
-}
