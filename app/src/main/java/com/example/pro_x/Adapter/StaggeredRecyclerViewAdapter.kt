@@ -1,6 +1,6 @@
 package com.example.pro_x.Adapter
 
-import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +15,7 @@ import com.example.pro_x.R
 class StaggeredRecyclerViewAdapter :
         RecyclerView.Adapter<StaggeredRecyclerViewAdapter.ItemHolder>() {
 
+    var TAG = "ADAPTER"
     private var imageList: List<ImageListModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
@@ -30,7 +31,8 @@ class StaggeredRecyclerViewAdapter :
         return imageList.size
     }
 
-    fun submitList(dataList : List<ImageListModel>){
+    fun submitList(dataList: ArrayList<ImageListModel>){
+        Log.d(TAG, "submitList: value of the imagelist" + dataList.size)
         imageList = dataList
     }
 

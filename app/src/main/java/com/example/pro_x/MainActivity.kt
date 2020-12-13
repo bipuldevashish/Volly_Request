@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pro_x.Adapter.StaggeredRecyclerViewAdapter
 import com.example.pro_x.Data.RequestData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import com.example.pro_x.Model.ImageListModel
+import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,15 +24,15 @@ class MainActivity : AppCompatActivity() {
 
 
         initRecyclerView()
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             createDateSet(this@MainActivity)
-            delay(3000)
-        }
+            delay(1000)
+       }
 
     }
     suspend fun createDateSet(context: Context) {
         Log.d(TAG, "createDateSet: ENTERED")
-        val data = RequestData.fetchWallpaper(context)
+        val data : ArrayList<ImageListModel>  = RequestData.fetchApi(context)
         staggeredRecyclerViewAdapter.submitList(data)
     }
 
