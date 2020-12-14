@@ -2,30 +2,28 @@ package com.example.pro_x.Data
 
 import android.content.Context
 import android.util.Log
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.pro_x.Model.ImageListModel
 
-object RequestData {
+
+class RequestData {
 
     var TAG = "app-debug-requestdata"
-
-     fun fetchApi(context : Context) {
+    private lateinit var apiResponse : String
+    fun fetchApi(context : Context) : String {
 
         Log.d(TAG, "fetchWallpaper: Entered")
         val queue = Volley.newRequestQueue(context)
         val url = "https://api.pexels.com/v1/curated/?page=1&per_page=80"
         val stringRequest = object : StringRequest(
-            Request.Method.GET,
-            url,
-            Response.Listener<String> { response ->
-                println(response)
-                val fetchWallpaperLink = FetchWallpaperLink()
-                fetchWallpaperLink.getWallpaper(response)
-            },
-            Response.ErrorListener { })
+                Method.GET,
+                url,
+                Response.Listener { response ->
+                    println(response)
+                    apiResponse = response
+                },
+                Response.ErrorListener { })
 
         //Authenticating yourself for the api call
         {
@@ -37,5 +35,6 @@ object RequestData {
             }
         }
         queue.add(stringRequest)
+        return apiResponse
     }
 }

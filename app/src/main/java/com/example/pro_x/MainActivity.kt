@@ -7,32 +7,36 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.android.volley.NetworkResponse
 import com.example.pro_x.Adapter.StaggeredRecyclerViewAdapter
 import com.example.pro_x.Data.RequestData
 import com.example.pro_x.Model.ImageListModel
+import com.example.pro_x.Utils.Init
+import com.example.pro_x.Utils.Init.fetchWallpaperLink
+import com.example.pro_x.Utils.Init.staggeredRecyclerViewAdapter
 import kotlinx.coroutines.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var staggeredRecyclerViewAdapter: StaggeredRecyclerViewAdapter
     var TAG = "app-debug"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         initRecyclerView()
+
         CoroutineScope(Dispatchers.IO).launch {
             createDateSet(this@MainActivity)
             delay(1000)
        }
 
     }
-    suspend fun createDateSet(context: Context) {
+     fun createDateSet(context: Context) {
         Log.d(TAG, "createDateSet: ENTERED")
-        val data : ArrayList<ImageListModel>  = RequestData.fetchApi(context)
+        val apiNetworkResponse : String = Init.requestData.fetchApi(context)
+        val data = fetchWallpaperLink.getWallpaper(apiNetworkResponse)
         staggeredRecyclerViewAdapter.submitList(data)
     }
 
@@ -43,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
             val topSpacingItemDecoration = TopSpacingItemDecoration(30)
             addItemDecoration(topSpacingItemDecoration)
-            staggeredRecyclerViewAdapter = StaggeredRecyclerViewAdapter()
             adapter = staggeredRecyclerViewAdapter
         }
     }

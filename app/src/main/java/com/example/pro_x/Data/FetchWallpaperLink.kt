@@ -1,8 +1,8 @@
 package com.example.pro_x.Data
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.pro_x.Adapter.StaggeredRecyclerViewAdapter
-import com.example.pro_x.Data.RequestData.TAG
 import com.example.pro_x.Model.ImageListModel
 import org.json.JSONArray
 import org.json.JSONException
@@ -21,7 +21,10 @@ class FetchWallpaperLink {
             val lenth: Int = jsonArray.length()
             Log.d(TAG, "fetchWallpaper: " + "length of the jsonarray is :" + lenth)
 
-            convertJsonToBlogPosts(jsonArray)
+
+
+
+
 
             //iterating through the json array
 //            for (i in 0 until jsonArray.length()) {
@@ -34,6 +37,8 @@ class FetchWallpaperLink {
 //                val imageListModel = ImageListModel(id, mediumImageUrl, largeImageUrl)
 //                imagearrayList.add(imageListModel)
 //            }
+
+
 
 
             var staggeredRecyclerViewAdapter = StaggeredRecyclerViewAdapter()
