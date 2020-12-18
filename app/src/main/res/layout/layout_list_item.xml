@@ -11,7 +11,7 @@
         android:contentDescription="photo"
         tools:src="@mipmap/ic_launcher"
         android:id="@+id/item_photo_iv"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

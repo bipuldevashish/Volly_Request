@@ -1,10 +1,13 @@
 package com.example.pro_x.Adapter
 
+import android.content.Context
+import android.media.Image
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -15,8 +18,8 @@ import com.example.pro_x.R
 class StaggeredRecyclerViewAdapter :
         RecyclerView.Adapter<StaggeredRecyclerViewAdapter.ItemHolder>() {
 
-    var TAG = "ADAPTER"
-    private var imageList: List<ImageListModel> = ArrayList()
+    private var TAG = "ADAPTER"
+    private var imageList : List<ImageListModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
 
@@ -28,16 +31,19 @@ class StaggeredRecyclerViewAdapter :
     }
 
     override fun getItemCount(): Int {
+        println("size of imagelist inside getItemCount : ${imageList.size}")
+        println("debug : adapter is running on" + Thread.currentThread().name)
         return imageList.size
     }
 
-    fun submitList(dataList: ArrayList<ImageListModel>){
-        Log.d(TAG, "submitList: value of the imagelist" + dataList.size)
-        imageList = dataList
+    fun submitList(dataList: List<ImageListModel>){
+        this.imageList = dataList
+        Log.d(TAG, " Inside submitList: value of the imagelist : ${imageList.size}")
+        notifyDataSetChanged()
     }
 
     class ItemHolder
-        constructor(v: View) : RecyclerView.ViewHolder(v),View.OnClickListener {
+    constructor(v: View) : RecyclerView.ViewHolder(v) {
 
         fun bind(imageListModel: ImageListModel){
             val imageView : ImageView = itemView.findViewById(R.id.item_photo_iv)
@@ -50,10 +56,6 @@ class StaggeredRecyclerViewAdapter :
                     .load(imageListModel.mediumUrl)
                     .into(imageView)
 
-    }
-
-        override fun onClick(p0: View?) {
-            TODO("Not yet implemented")
-            }
         }
     }
+}

@@ -1,9 +1,12 @@
 package com.example.pro_x.Data
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import com.example.pro_x.Adapter.StaggeredRecyclerViewAdapter
+import com.example.pro_x.MainActivity
 import com.example.pro_x.Model.ImageListModel
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -12,57 +15,33 @@ class FetchWallpaperLink {
 
 
     val list = ArrayList<ImageListModel>()
+    val staggeredRecyclerViewAdapter = StaggeredRecyclerViewAdapter()
 
-    fun getWallpaper(response: String) : ArrayList<ImageListModel> {
+    fun getWallpaper(response: String){
 
         try {
             val jsonObject = JSONObject(response)
             val jsonArray: JSONArray = jsonObject.getJSONArray("photos")
-            val lenth: Int = jsonArray.length()
-            Log.d(TAG, "fetchWallpaper: " + "length of the jsonarray is :" + lenth)
-
-
-
-
+            val length: Int = jsonArray.length()
+            Log.d(TAG, "fetchWallpaper: length of the jsonarray is :$length")
 
 
             //iterating through the json array
-//            for (i in 0 until jsonArray.length()) {
-//                var jsonObject: JSONObject = jsonArray.getJSONObject(i)
-//                var id: Int = jsonObject.getInt("id")
-//                var objectImage: JSONObject = jsonObject.getJSONObject("src")
-//                var largeImageUrl: String = objectImage.getString("large")
-//                var mediumImageUrl: String = objectImage.getString("medium")
-//
-//                val imageListModel = ImageListModel(id, mediumImageUrl, largeImageUrl)
-//                imagearrayList.add(imageListModel)
-//            }
+            for (i in 0 until jsonArray.length()) {
+                var jsonObject: JSONObject = jsonArray.getJSONObject(i)
+                val id: Int = jsonObject.getInt("id")
+                val objectImage: JSONObject = jsonObject.getJSONObject("src")
+                val largeImageUrl: String = objectImage.getString("large")
+                val mediumImageUrl: String = objectImage.getString("medium")
 
+                val imageListModel = ImageListModel(id, mediumImageUrl, largeImageUrl)
+                list.add(imageListModel)
+            }
 
+        }catch (e: JSONException) {}
 
-
-            var staggeredRecyclerViewAdapter = StaggeredRecyclerViewAdapter()
-            staggeredRecyclerViewAdapter.notifyDataSetChanged()
-
-        } catch (e: JSONException) {
+                println("value of list before calling submitlist() : ${list.size}")
+                staggeredRecyclerViewAdapter.submitList(list)
+                staggeredRecyclerViewAdapter.notifyDataSetChanged()
         }
-        Log.d(TAG, "getWallpaper: ")
-        return list
     }
-
-    fun convertJsonToBlogPosts(jsonArray: JSONArray): ArrayList<ImageListModel>{
-
-        for(i in 0 until jsonArray.length()){
-            list.add(
-                    ImageListModel(
-                            (jsonArray[i] as JSONObject)["id"] as Int,
-                            (jsonArray[i] as JSONObject)["mediumUrl"] as String,
-                            (jsonArray[i] as JSONObject)["largeUrl"] as String
-                    )
-            )
-        }
-        return list
-    }
-
-
-}

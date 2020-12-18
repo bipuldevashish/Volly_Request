@@ -11,7 +11,7 @@ class ImageListModel (
     ) {
 
         override fun toString(): String {
-            return "ImageListModel(title='$id', image='$mediumUrl', username='$largeUrl')"
+            return "ImageListModel(id='$id', mediumUrl='$mediumUrl', largeUrl='$largeUrl')"
         }
 
     }
