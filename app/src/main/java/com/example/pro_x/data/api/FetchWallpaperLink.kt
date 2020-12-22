@@ -1,12 +1,8 @@
-package com.example.pro_x.Data
+package com.example.pro_x.data.api
 
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.util.Log
-import com.example.pro_x.Adapter.StaggeredRecyclerViewAdapter
-import com.example.pro_x.MainActivity
-import com.example.pro_x.Model.ImageListModel
-import kotlinx.coroutines.*
+import com.example.pro_x.model.ImageListModel
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -15,9 +11,8 @@ class FetchWallpaperLink {
 
 
     val list = ArrayList<ImageListModel>()
-    val staggeredRecyclerViewAdapter = StaggeredRecyclerViewAdapter()
 
-    fun getWallpaper(response: String){
+    fun getWallpaper(response: String) {
 
         try {
             val jsonObject = JSONObject(response)
@@ -38,10 +33,9 @@ class FetchWallpaperLink {
                 list.add(imageListModel)
             }
 
-        }catch (e: JSONException) {}
-
-                println("value of list before calling submitlist() : ${list.size}")
-                staggeredRecyclerViewAdapter.submitList(list)
-                staggeredRecyclerViewAdapter.notifyDataSetChanged()
+        } catch (e: JSONException) {
         }
+
+        println("value of list before calling submitlist() : ${list.size}")
     }
+}

@@ -1,4 +1,4 @@
-package com.example.pro_x.Model
+package com.example.pro_x.model
 
 class ImageListModel (
 
